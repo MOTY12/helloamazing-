@@ -529,7 +529,7 @@ const { Email } = req.body;
         // Send the mail
         const mail = {
           to: `${user.Email}`,
-          from: "helloamazing@gmail.com",
+          from: "mukhtarapril2000@gmail.com",
           subject: "Reset Your HelloAmazing Password",
           html: `    
 <head>
