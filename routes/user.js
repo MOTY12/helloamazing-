@@ -281,7 +281,7 @@ router.post('/register', async(req, res) => {
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" bgcolor="lightgreen" style="border-radius: 6px;">
-                          <a href="http://localhost:4000/helloAmazing/verify-email/${token.token}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Confirm Email Address</a>
+                          <a href="https://helloamazing.herokuapp.com/helloAmazing/verify-email/${token.token}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Confirm Email Address</a>
                         </td>
                       </tr>
                     </table>
@@ -715,7 +715,7 @@ const { Email } = req.body;
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" bgcolor="lightgreen" style="border-radius: 6px;">
-                          <a href="http://localhost:4000/login/reset/${token.token}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset Password</a>
+                          <a href="https://helloamazing.herokuapp.com/login/reset/${token.token}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset Password</a>
                         </td>
                       </tr>
                     </table>
@@ -810,10 +810,7 @@ const { Email } = req.body;
           
           
           
-          
-          
-          <p>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n Please click on the following link, or paste this into your browser to complete the process:\n\n
-        <a href="http://localhost:4000/login/reset/${token.token}">http://localhost:4000/login/reset/${token.token}</a> \n\n If you did not request this, please ignore this email and your password will remain unchanged.\n </p>`,
+          `,
         };
 
         sgMail
