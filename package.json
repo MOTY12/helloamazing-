@@ -3,18 +3,13 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-"engines": {
-    "node": "12.11.1"
-  },
     "scripts": {
-        "start": "node app.js"
+        "start": "nodemon app.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@sendgrid/mail": "^7.4.5",
-        "audic": "^2.0.0",
-        "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
         "connect-mongodb-session": "^2.4.1",
