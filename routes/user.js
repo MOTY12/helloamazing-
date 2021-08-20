@@ -75,11 +75,11 @@ router.post('/register', async(req, res) => {
     })
     user.save((err) => {
         if (err) {
-            console.log(err)
-            //   if (err.name === 'MongoError') {
-            //         //  validation error
-            //         return res.status(401).json({ message: "User with this email already exist " })
-            //     }
+//             console.log(err)
+              if (err.name === 'MongoError') {
+                    //  validation error
+                    return res.status(401).json({ message: "User with this email already exist " })
+                }
         } else {
             // create a token
             const token = new Token({
