@@ -16,8 +16,6 @@ const Joi = require("joi");
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const router = express()
 const path = require("path")
-//  const apikey = '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'
-// sgMail.setApiKey(apikey)
 
 
 router.get(`/user`, async(req, res) => {
@@ -39,8 +37,8 @@ router.get('/user/:id', async(req, res) => {
 })
 
 router.get('/crosscheck', async(req, res) => {
-//      const apikey = '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'
-//    sgMail.setApiKey(apikey)
+     const apikey = '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'
+   sgMail.setApiKey(apikey)
 
                 const message = {
                     from: 'mukhtarapril2000@gmail.com',
