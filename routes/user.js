@@ -46,8 +46,8 @@ router.get('/crosscheck', async(req, res) => {
         port: "587",
         secure: false,
         auth: {
-            user: "mukhtarapril8@gmail.com",
-            pass: "mukhtar2944"
+            user: process.env.USERNAME,
+            pass: process.env.PASSWORD 
         }
     });
     var mailOptions = {
