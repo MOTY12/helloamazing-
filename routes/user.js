@@ -44,6 +44,7 @@ router.get('/crosscheck', async(req, res) => {
         host: 'smtp.gmail.com',
         service: "Gmail",
         port: "587",
+        secure: false,
         auth: {
             user: "mukhtarapril2000@gmail.com",
             pass: "opeyemi2944"
