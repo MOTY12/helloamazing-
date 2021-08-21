@@ -18,10 +18,11 @@ router.get("/course/:id", async(req, res) => {
     res.status(200).json(courses)
 })
 router.post("/course", async(req, res) => {
-    var adminId = req.userId
+    // var adminId = req.userId
     const course = new Course({
+        // AdminId: adminId,
         title: req.body.title,
-        author: adminId,
+        author: req.body.author,
         description: req.body.description,
         audiof: req.body.audiof,
         image: req.body.image
