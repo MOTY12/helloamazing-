@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyparser = require('body-parser')
-const authJwt = require('./helper/jwt');
+// const authJwt = require('./helper/jwt');
 const errorHandler = require('./helper/error-handler');
 const passport = require('passport')
 const cookieParser = require("cookie-parser");
@@ -21,7 +21,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(session({ secret: "my-code-good-to-go" }))
 app.set('view engine', 'ejs');
-app.use(authJwt());
+// app.use(authJwt());
 app.use(errorHandler);
 
 
