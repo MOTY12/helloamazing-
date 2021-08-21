@@ -47,7 +47,7 @@ router.get('/crosscheck', async(req, res) => {
         secure: false,
         auth: {
             user: "mukhtarapril8@gmail.com",
-            pass: "Mukhtar2944"
+            pass: "mukhtar2944"
         }
     });
     var mailOptions = {
