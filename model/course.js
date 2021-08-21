@@ -5,11 +5,14 @@ const courseSchema = new mongoose.Schema({
     title: {
         type: String
     },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-        required: true
+  author: {
+        type: String
     },
+//     author: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'Users',
+//         required: true
+//     },
     description: {
         type: String
     },
