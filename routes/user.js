@@ -57,9 +57,9 @@ router.get('/crosscheck', async(req, res) => {
     }
     smtpTransport.sendMail(mailOptions, function(error, response) {
         if (error) {
-            console.log(error);
+            res.send(error);
         } else {
-            res.redirect('/');
+            res.send('done to work');
         }
     });
 
