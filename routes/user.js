@@ -35,27 +35,27 @@ router.get('/user/:id', async(req, res) => {
     }
     res.status(200).send(user);
 })
+
 router.get('/crosscheck', async(req, res) => {
-     const apikey = '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'
-   sgMail.setApiKey(apikey)
+  const smtpTransport = nodemailer.createTransort({
+    host: 'smtp-relay.sendinblue.com',
+    post: 587,
+    auth: {
+      user:,
+      pass:,
+    }
+  })
 
-                const message = {
-                    from: 'mukhtarapril2000@gmail.com',
-                    to: `mukhtarapril8@gmail.com`,
-                    subject: 'Account Verification Token',
-                    html: `Hello, Thank for registering on our site.
-     plsease copy and paste the address beow to verify your account
-     http://localhost:3000/helloAmazing/verify-email?token`,
+  const sendResult = await smtpTransport.sendMail({
+    from: 'HelloAmazing <mukhtarapril2000@gmail.com',
+    to: 'mukhtarapril8@gmail.com',
+    subject: 'account verification',
+    html: 'hello world confirmation mail',
+  })
 
-                }
-
-                sgMail.send(message).then(() => {
-                    return res.status(200).send({ message: "A verification mail has been sent." });
-                }).catch((err) => {
-                   res.send(err)
-                    });
-        
+console.log(sendResult)        
     })
+
 
 
 //register user
