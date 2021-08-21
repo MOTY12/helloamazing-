@@ -560,10 +560,20 @@ const { Email } = req.body;
         if (err) {
           return res.status(500).send({ message: "An unexpected error occurred" });
         }
-           const sendgridapikey = process.env.SENDGRID_API_KEY
-                sgMail.setApiKey(sendgridapikey)
+          
+          var smtpTransport = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        service: "Gmail",
+        port: "587",
+        secure: false,
+        auth: {
+            user: process.env.USERNAME,
+            pass: process.env.PASSWORD 
+        }
+    });
+   
         // Send the mail
-        const mail = {
+        const  mailOptions  = {
           to: `${user.Email}`,
           from: "mukhtarapril2000@gmail.com",
           subject: "Reset Your HelloAmazing Password",
@@ -826,40 +836,16 @@ const { Email } = req.body;
     <!-- end footer -->
 
   </table>
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
+                    
           `,
         };
-
-        sgMail
-          .send(mail)
-          .then(() => {
-            return res
-              .status(200)
-              .send({ message: `A validation email has been sent to ${user.Email}` });
-          })
-          .catch((err) => {
-            return res.status(503).send({
-              message: `Impossible to send an email to ${user.Email}, try again. Our service may be down.`,
-            });
-            console.log(err)
-          });
+    smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send('done to work');
+        }
+    });
       });
     });
   });
