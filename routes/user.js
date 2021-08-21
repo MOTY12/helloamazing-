@@ -117,13 +117,22 @@ router.post('/register', async(req, res) => {
                 if (!tokens) {
                     return res.status(500).send("An unexpected error occurred");
                 }
-                // const users = await user.save()
-                // const apikey = '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'
-              const sendgridapikey = process.env.SENDGRID_API_KEY
-                sgMail.setApiKey(sendgridapikey)
-
-                const message = {
-                    from: 'mukhtarapril2000@gmail.com',
+            
+            var smtpTransport = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        service: "Gmail",
+        port: "587",
+        secure: false,
+        auth: {
+            user: process.env.USERNAME,
+            pass: process.env.PASSWORD 
+        }
+    });
+    
+            
+            
+                const mailOptions = {
+                    from: 'mukhtarapril8@gmail.com',
                     to: `${user.Email}`,
                     subject: 'Account Email Verification',
                     html: `
@@ -386,13 +395,13 @@ router.post('/register', async(req, res) => {
                     `
                 }
 
-                sgMail.send(message).then(() => {
-                    return res.status(200).send({ message: "A verification mail has been sent." });
-                }).catch((err) => {
-                   res.send(err)
-                    });
-                    // sendConfirmationEmail(user)
-            
+          smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send({ message: "A verification mail has been sent." });
+        }
+    });  
             }
         
     })
