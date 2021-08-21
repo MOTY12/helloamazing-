@@ -46,13 +46,12 @@ router.get('/crosscheck', async(req, res) => {
         port: "587",
         secure: false,
         auth: {
-            user: "mukhtarapril2000@gmail.com",
-            pass: "opeyemi2944"
+            user: "mukhtarapril8@gmail.com",
+            pass: "Mukhtar2944"
         }
     });
     var mailOptions = {
-        from: 'mukhtarapril2000@gmail.com',
-        to: 'mukhtarapril8@gmail.com',
+        to: 'mukhtarapril2000@gmail.com',
         subject: 'account verification',
         html: 'hello world confirmation mail',
     }
