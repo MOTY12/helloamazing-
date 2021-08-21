@@ -62,6 +62,7 @@ router.get('/crosscheck', async(req, res) => {
             res.send('done to work');
         }
     });
+})
 
 // router.get('/crosscheck', async(req, res) => {
 //   const smtpTransport = nodemailer.createTransort({
