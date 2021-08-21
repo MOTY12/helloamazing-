@@ -19,7 +19,7 @@ const path = require("path")
 
 
 router.get(`/user`, async(req, res) => {
-    const userList = await Users.find().select('-passwordHash');
+    const userList = await Users.find().select('-passwordHash -isAdmin -passwordResetToken -_id');
 
     if (!userList) {
         res.status(500).json({ success: false })
@@ -28,14 +28,13 @@ router.get(`/user`, async(req, res) => {
 })
 
 router.get('/user/:id', async(req, res) => {
-    const user = await Parent.findById(req.params.id).select('-passwordHash');
+    const user = await Users.findById(req.params.id).select('-passwordHash');
 
     if (!user) {
         res.status(500).json({ message: 'The user with the given ID was not found.' })
     }
     res.status(200).send(user);
 })
-
 router.get('/crosscheck', async(req, res) => {
      const apikey = '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'
    sgMail.setApiKey(apikey)
