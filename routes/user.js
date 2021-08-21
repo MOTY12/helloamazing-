@@ -41,12 +41,12 @@ router.get('/user/:id', async(req, res) => {
 router.get('/crosscheck', async(req, res) => {
 
     var smtpTransport = nodemailer.createTransport({
-        host: 'smtp-relay.sendinblue.com',
-//         service: "Gmail",
+        host: 'smtp.gmail.com',
+        service: "Gmail",
         port: "587",
         auth: {
             user: "mukhtarapril2000@gmail.com",
-            pass: "Mukhtar2944@"
+            pass: "Opeyemi2944"
         }
     });
     var mailOptions = {
