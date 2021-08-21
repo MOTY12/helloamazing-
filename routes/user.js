@@ -36,25 +36,52 @@ router.get('/user/:id', async(req, res) => {
     res.status(200).send(user);
 })
 
+
+
 router.get('/crosscheck', async(req, res) => {
-  const smtpTransport = nodemailer.createTransort({
-    host: 'smtp-relay.sendinblue.com',
-    post: 587,
-    auth: {
-      user:,
-      pass:,
+
+    var smtpTransport = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        service: "Gmail",
+        port: "587",
+        auth: {
+            user: "mukhtarapril2000@gmail.com",
+            pass: "opeyemi2944"
+        }
+    });
+    var mailOptions = {
+        from: 'mukhtarapril2000@gmail.com',
+        to: 'mukhtarapril8@gmail.com',
+        subject: 'account verification',
+        html: 'hello world confirmation mail',
     }
-  })
+    smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.redirect('/');
+        }
+    });
 
-  const sendResult = await smtpTransport.sendMail({
-    from: 'HelloAmazing <mukhtarapril2000@gmail.com',
-    to: 'mukhtarapril8@gmail.com',
-    subject: 'account verification',
-    html: 'hello world confirmation mail',
-  })
+// router.get('/crosscheck', async(req, res) => {
+//   const smtpTransport = nodemailer.createTransort({
+//     host: 'smtp-relay.sendinblue.com',
+//     post: 587,
+//     auth: {
+//         user: "mukhtarapril2000@gmail.com",
+//         pass: "UBYDRcQv19W0C5t2",
+//     }
+//   })
 
-console.log(sendResult)        
-    })
+//   const sendResult = await smtpTransport.sendMail({
+//     from: 'mukhtarapril2000@gmail.com',
+//     to: 'mukhtarapril8@gmail.com',
+//     subject: 'account verification',
+//     html: 'hello world confirmation mail',
+//   })
+
+// console.log(sendResult)        
+//     })
 
 
 
