@@ -59,6 +59,23 @@ router.put("/updatecourse/:id", async(req, res) => {
     }
 })
 
+
+router.get('/searchcourse', (req, res, next) => {
+    const thename = req.query.thename;
+    Course.find({
+        $or: [{
+            "title": { '$regex': `${thename}`, $options: '$i' }
+        }, { "author": { '$regex': `${thename}`, $options: '$i' } },
+        { "tags": { '$regex': `${thename}`, $options: '$i' } }]
+    }).then(data => { res.send(data) }).catch(err => {
+        return res.status(400).json({
+            success: false,
+            error: err
+        })
+    });
+})
+
+
 router.delete('/deletecourse', async(req, res) => {
     const courses = await Course.findByIdAndRemove(req.params.id)
         .then(courses => {
