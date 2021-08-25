@@ -5,7 +5,7 @@ const router = express()
 
 // get new training
 router.get('/tag', async(req, res) => {
-    const tagslist = await tagSchema.find().split("-").join(" ")
+    const tagslist = await tagSchema.find()
     if (!taglist) {
         res.status(500).json({
             message: "No author found "
