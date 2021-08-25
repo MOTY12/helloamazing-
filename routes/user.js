@@ -497,6 +497,7 @@ router.post('/googlelogin', (req, res) => {
 
 })
 
+
 //login user user => user.name === req.body.name
 router.post('/login', async(req, res) => {
     const user = await Users.findOne({ Email: req.body.Email })
@@ -526,7 +527,6 @@ router.post('/login', async(req, res) => {
     } else {
         res.status(400).send('password is wrong!');
     }
-
 
 })
 
