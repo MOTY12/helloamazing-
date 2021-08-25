@@ -28,10 +28,12 @@ app.use(errorHandler);
 const usersRoutes = require('./routes/user')
 const viewsRoutes = require('./routes/views')
 const courseRoutes = require('./routes/course')
+const tagsRoutes = require('./routes/tags')
 
 app.use(`${apis}`, usersRoutes)
 app.use(`${apis}`, viewsRoutes)
 app.use(`${apis}`, courseRoutes)
+app.use(`${apis}`, tagsRoutes)
 
 
 passport.use(new facebookStrategy({
