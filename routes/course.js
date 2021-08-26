@@ -143,19 +143,30 @@ router.put("/updatecourse/:id", async(req, res) => {
 })
 
 
+
 router.get('/searchcourse', (req, res, next) => {
     const thename = req.query.thename;
     Course.find({
         $or: [{
-            "title": { '$regex': `${thename}`, $options: '$i' }
-        }, { "author": { '$regex': `${thename}`, $options: '$i' } },
-        { "tags": { '$regex': `${thename}`, $options: '$i' } }]
-    }).then(data => { res.send(data) }).catch(err => {
+                "title": { '$regex': `${thename}`, $options: '$i' }
+            }, { "author": { '$regex': `${thename}`, $options: '$i' } },
+            // { "tag": { '$regex': `${thename}`, $options: '$i' } 
+            // }
+        ]
+    }).populate("tag").then(data => { res.send(data) }).catch(err => {
         return res.status(400).json({
             success: false,
             error: err
         })
     });
+})
+
+router.get('/getmusicbytags/:id', async(req, res) => {
+    const courses = await Course.find({ tag: req.params.id })
+    if (!courses) {
+        res.status(500).json({ msg: "ooh sorry!!!. the course is not available" })
+    }
+    res.status(200).json(courses)
 })
 
 
