@@ -144,7 +144,7 @@ router.put("/updatecourse/:id", async(req, res) => {
 
 
 
-router.get('/searchcourse', (req, res, next) => {
+router.get('/searchmusic', (req, res, next) => {
     const thename = req.query.thename;
     Course.find({
         $or: [{
