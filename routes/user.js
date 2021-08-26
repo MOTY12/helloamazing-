@@ -541,7 +541,7 @@ router.post("/forgotpassword", (req, res) => {
         // Create a verification token
         var token = new Token({
             _userId: user._id,
-            token: crypto.randomBytes(6).toString("hex"),
+            token: crypto.randomBytes(3).toString("hex"),
         });
 
         user.passwordResetToken = token.token;
@@ -580,7 +580,7 @@ router.post("/forgotpassword", (req, res) => {
                     if (error) {
                         res.send(error);
                     } else {
-                        res.send('done to work');
+                      res.status(200).json({msg: 'Check your Email. A code is sent'})      
                     }
                 });
             });
