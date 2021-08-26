@@ -531,398 +531,89 @@ router.post('/login', async(req, res) => {
 })
 
 router.post("/forgotpassword", (req, res) => {
-//   const { error } = validateEmail(req.body);
-//   if (error) return res.status(400).send({ message: error.details[0].message });
-
-//   req.body = sanitize(req.body);
-const { Email } = req.body;
-  Users.findOne({ Email }, function (err, user) {
-    if (err || !user) {
-      return res.status(500).send({ message: "An unexpected error occurred" });
-    }
-    if (!user) return res.status(404).send({ message: "No user found with this email address." });
-
-    // Create a verification token
-    var token = new Token({
-      _userId: user._id,
-      token: crypto.randomBytes(16).toString("hex"),
-    });
-
-    user.passwordResetToken = token.token;
-    user.passwordResetExpires = moment().add(12, "hours");
-
-    user.save(function (err) {
-      if (err) {
-        return res.status(500).send({ message: "An unexpected error occurred" });
-      }
-      // Save the token
-      token.save(function (err) {
-        if (err) {
-          return res.status(500).send({ message: "An unexpected error occurred" });
+    const { Email } = req.body;
+    Users.findOne({ Email }, function(err, user) {
+        if (err || !user) {
+            return res.status(500).send({ message: "An unexpected error occurred" });
         }
-          
-          var smtpTransport = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        service: "Gmail",
-        port: "587",
-        secure: false,
-        auth: {
-            user: process.env.USERNAME,
-            pass: process.env.PASSWORD 
-        }
-    });
-   
-        // Send the mail
-        const  mailOptions  = {
-          to: `${user.Email}`,
-          from: "mukhtarapril2000@gmail.com",
-          subject: "Reset Your HelloAmazing Password",
-          html: `    
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style type="text/css">
-  /**
-   * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
-   */
-  @media screen {
-    @font-face {
-      font-family: 'Source Sans Pro';
-      font-style: normal;
-      font-weight: 400;
-      src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
-    }
-    @font-face {
-      font-family: 'Source Sans Pro';
-      font-style: normal;
-      font-weight: 700;
-      src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
-    }
-  }
-  /**
-   * Avoid browser level font resizing.
-   * 1. Windows Mobile
-   * 2. iOS / OSX
-   */
-  body,
-  table,
-  td,
-  a {
-    -ms-text-size-adjust: 100%; /* 1 */
-    -webkit-text-size-adjust: 100%; /* 2 */
-  }
-  /**
-   * Remove extra space added to tables and cells in Outlook.
-   */
-  table,
-  td {
-    mso-table-rspace: 0pt;
-    mso-table-lspace: 0pt;
-  }
-  /**
-   * Better fluid images in Internet Explorer.
-   */
-  img {
-    -ms-interpolation-mode: bicubic;
-  }
-  /**
-   * Remove blue links for iOS devices.
-   */
-  a[x-apple-data-detectors] {
-    font-family: inherit !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-    line-height: inherit !important;
-    color: inherit !important;
-    text-decoration: none !important;
-  }
-  /**
-   * Fix centering issues in Android 4.4.
-   */
-  div[style*="margin: 16px 0;"] {
-    margin: 0 !important;
-  }
-  body {
-    width: 100% !important;
-    height: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  /**
-   * Collapse table borders to avoid space between cells.
-   */
-  table {
-    border-collapse: collapse !important;
-  }
-  a {
-    color: #1a82e2;
-  }
-  img {
-    height: auto;
-    line-height: 100%;
-    text-decoration: none;
-    border: 0;
-    outline: none;
-  }
-  </style>
+        if (!user) return res.status(404).send({ message: "No user found with this email address." });
 
-</head>
-<body style="background-color: #e9ecef;">
+        // Create a verification token
+        var token = new Token({
+            _userId: user._id,
+            token: crypto.randomBytes(6).toString("hex"),
+        });
 
-  <!-- start preheader -->
-  <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    A preheader is the short summary text that follows the subject line when an email is viewed in the inbox.
-  </div>
-  <!-- end preheader -->
+        user.passwordResetToken = token.token;
+        user.passwordResetExpires = moment().add(12, "hours");
 
-  <!-- start body -->
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        user.save(function(err) {
+            if (err) {
+                return res.status(500).send({ message: "An unexpected error occurred" });
+            }
+            // Save the token
+            token.save(function(err) {
+                if (err) {
+                    return res.status(500).send({ message: "An unexpected error occurred" });
+                }
 
-    <!-- start logo -->
-    <tr>
-      <td align="center" bgcolor="#e9ecef">
-        <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-        <tr>
-        <td align="center" valign="top" width="600">
-        <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-          <tr>
-            <td align="center" valign="top" style="padding: 36px 24px;">
-              <a href="#" target="_blank" style="display: inline-block;">
-                <img src="" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
-              </a>
-            </td>
-          </tr>
-        </table>
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
-        </tr>
-        </table>
-        <![endif]-->
-      </td>
-    </tr>
-    <!-- end logo -->
+                var smtpTransport = nodemailer.createTransport({
+                    host: 'smtp.gmail.com',
+                    service: "Gmail",
+                    port: "587",
+                    secure: false,
+                    auth: {
+                        user: process.env.USERNAME,
+                        pass: process.env.PASSWORD
+                    }
+                });
 
-    <!-- start hero -->
-    <tr>
-      <td align="center" bgcolor="#e9ecef">
-        <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-        <tr>
-        <td align="center" valign="top" width="600">
-        <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-          <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
-              <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">Confirm Your Email Address</h1>
-            </td>
-          </tr>
-        </table>
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
-        </tr>
-        </table>
-        <![endif]-->
-      </td>
-    </tr>
-    <!-- end hero -->
-
-    <!-- start copy block -->
-    <tr>
-      <td align="center" bgcolor="#e9ecef">
-        <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-        <tr>
-        <td align="center" valign="top" width="600">
-        <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-
-          <!-- start copy -->
-          <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Hi ${user.fName},
-                <br /><br />
-             We heard that you lost your Helloamazing password. sorry about that!
-             <br><br>
-             But don't worry! You can use the following button to reset your password
-               </p>
-            </td>
-          </tr>
-          <!-- end copy -->
-
-          <!-- start button -->
-          <tr>
-            <td align="left" bgcolor="#ffffff">
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td align="center" bgcolor="#ffffff" style="padding: 12px;">
-                    <table border="0" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td align="center" bgcolor="lightgreen" style="border-radius: 6px;">
-                          <a href="https://helloamazing.herokuapp.com/login/reset/${token.token}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Reset Password</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <!-- end button -->
-
-          <!-- start copy -->
-          <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">If you don't use this link within 3 hours, it wll expire. To get a new password reset link follow the same process
-                </p>
-             </td>
-          </tr>
-          <!-- end copy -->
-
-          <!-- start copy -->
-          <tr>
-            <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #d4dadf">
-              <p style="margin: 0;">Cheers,<br> HelloAmazing</p>
-            </td>
-          </tr>
-          <!-- end copy -->
-
-        </table>
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
-        </tr>
-        </table>
-        <![endif]-->
-      </td>
-    </tr>
-    <!-- end copy block -->
-
-    <!-- start footer -->
-    <tr>
-      <td align="center" bgcolor="#e9ecef" style="padding: 24px;">
-        <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
-        <tr>
-        <td align="center" valign="top" width="600">
-        <![endif]-->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-
-          <!-- start permission -->
-          <tr>
-            <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-              <p style="margin: 0;">You received this email because you registered on HelloAmazing.
-              If you wish to delete application or to stop receiving these mails, pleases do not click the link or you can safely delete this email.</p>
-            </td>
-          </tr>
-          <!-- end permission -->
-
-          <!-- start unsubscribe -->
-          <tr>
-            <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-              <p style="margin: 0;">If  you have any problems or need technical support, please contact us:<a href="#">HelloAmazing@gmail.com</a>.</p>
-              
-            </td>
-          </tr>
-          <!-- end unsubscribe -->
-
-        </table>
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
-        </tr>
-        </table>
-        <![endif]-->
-      </td>
-    </tr>
-    <!-- end footer -->
-
-  </table>
-                    
+                // Send the mail
+                const mailOptions = {
+                    to: `${user.Email}`,
+                    from: "mukhtarapril2000@gmail.com",
+                    subject: "Reset Your HelloAmazing Password",
+                    html: ` your forget password token is ${token.token}  
           `,
-        };
-    smtpTransport.sendMail(mailOptions, function(error, response) {
-        if (error) {
-            res.send(error);
-        } else {
-            res.send('done to work');
-        }
+                };
+                smtpTransport.sendMail(mailOptions, function(error, response) {
+                    if (error) {
+                        res.send(error);
+                    } else {
+                        res.send('done to work');
+                    }
+                });
+            });
+        });
     });
-      });
-    });
-  });
 });
 
-router.post("/login/reset/:token", (req, res) => {
-function validatePassword(input) {
-  const schema = Joi.object({
-    passwordHash: Joi.string().min(5).max(255).required(),
-  });
-  return schema.validate(input);
-}
-  
-  // Validate password Input
-  const { error } = validatePassword(req.body);
-  if (error) return res.status(400).send({ message: error.details[0].message });
-  // Find a matching token
-  Token.findOne({ token: req.params.token }, function (err, token) {
-    if (err) {
-      return res.status(500).send("An unexpected error occurred");
-    }
-    if (!token)
-      return res.status(404).send({
-        message: "This token is not valid. Your token may have expired.",
-      });
-
-    // If we found a token, find a matching user
-    Users.findById(token._userId, function (err, user) {
-      if (err) {
-        return res.status(500).send("An unexpected error occurred");
-      }
-
-      if (!user)
-        return res.status(404).send({ message: `We were unable to find a user for this token.` });
-
-      if (user.passwordResetToken !== token.token)
-        return res.status(400).send({
-          message:
-            "User token and your token didn't match. You may have a more recent token in your mail list.",
-        });
-
-      // Verify that the user token expires date has not been passed
-      if (moment().utcOffset(0) > user.passwordResetExpires) {
-        return res.status(400).send({
-          message:
-            "You cannot reset your password. The reset token has expired. Please go through the reset form again.",
-        });
-      }
-      // Update user
-      user.passwordHash = bcrypt.hashSync(req.body.passwordHash, 10);
-      user.passwordResetToken = "";
-      user.passwordResetExpires = moment().utcOffset(0);
-      //Hash new password
-      
-        // Save updated user to the database
-        user.save(function (err) {
-          if (err) {
-            return res.status(500).send({ message: "An unexpected error occurred" });
-          }
-          // Send mail confirming password change to the user
-          const mail = {
-            to: user.email,
-            from: `${sendingEmail}`,  
-            subject: "Your password has been changed",
-            text: "Some useless text",
-            html: `<p>This is a confirmation that the password for your account ${user.Email} has just been changed. </p>`,
-          };
-          sgMail.send(mail).catch(() => {
-            return res.status(503).send({
-              message: `Impossible to send an email to ${user.Email}, try again. Our service may be down.`,
+router.post("/resetpassword", async(req, res) => {
+    Users.findOne({
+        passwordResetToken: req.body.passwordResetToken
+    }).then(user => {
+        if (!user) {
+            return res.status(422).json({ error: "This token is not valid. Your token may have expired." })
+        }
+        // Verify that the user token expires date has not been passed
+        if (moment().utcOffset(0) > user.passwordResetExpires) {
+            return res.status(400).send({
+                message: "You cannot reset your password. The reset token has expired. Please go through the reset form again.",
             });
-          });
-          return res.status(200).send({ message: "Password has been successfully changed." });
+        }
+        user.passwordHash = bcrypt.hashSync(req.body.passwordHash, 10);
+        user.passwordResetToken = "";
+        user.passwordResetExpires = moment().utcOffset(0);
+
+        // Save updated user to the database
+        user.save(function(err) {
+            if (err) {
+                return res.status(500).send({ message: "An unexpected error occurred" });
+            }
+
+            return res.status(200).send({ message: "Password has been successfully changed." });
         })
-      
-    });
-  });
+    })
 });
 
 //count all user in the system
