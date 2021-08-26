@@ -123,9 +123,8 @@ router.post('/register', async(req, res) => {
                     return res.status(500).send("An unexpected error occurred");
                 }
             
-            var smtpTransport = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        service: "Gmail",
+    var smtpTransport = nodemailer.createTransport({
+        host: process.env.Hostname,
         port: "587",
         secure: false,
         auth: {
@@ -133,11 +132,8 @@ router.post('/register', async(req, res) => {
             pass: process.env.PASSWORD 
         }
     });
-    
-            
-            
-                const mailOptions = {
-                    from: 'mukhtarapril8@gmail.com',
+    var mailOptions = {
+       from: "'HelloAmazing' <mukhtarapril2000@gmail.com>",
                     to: `${user.Email}`,
                     subject: 'Account Email Verification',
                     html: `
@@ -562,23 +558,21 @@ router.post("/forgotpassword", (req, res) => {
                     return res.status(500).send({ message: "An unexpected error occurred" });
                 }
 
-                var smtpTransport = nodemailer.createTransport({
-                    host: 'smtp.gmail.com',
-                    service: "Gmail",
-                    port: "587",
-                    secure: false,
-                    auth: {
-                        user: process.env.USERNAME,
-                        pass: process.env.PASSWORD
-                    }
-                });
+                    var smtpTransport = nodemailer.createTransport({
+        host: process.env.Hostname,
+        port: "587",
+        secure: false,
+        auth: {
+            user: process.env.USERNAME,
+            pass: process.env.PASSWORD 
+        }
+    });
+    var mailOptions = {
+       from: "'HelloAmazing' <mukhtarapril2000@gmail.com>",
 
-                // Send the mail
-                const mailOptions = {
                     to: `${user.Email}`,
-                    from: "mukhtarapril2000@gmail.com",
                     subject: "Reset Your HelloAmazing Password",
-                    html: ` your forget password token is ${token.token}  
+                    html: ` your forget password token is <b color="red">${token.token}</b>  
           `,
                 };
                 smtpTransport.sendMail(mailOptions, function(error, response) {
