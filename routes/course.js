@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary").v2;
 const router = express()
 
 router.get("/courses", async(req, res) => {
-    const courses = await Course.find()
+    const courses = await Course.find().populate('tag').sort({ dateCreated: -1 })
     res.json(courses)
     if (!courses) {
         res.json({ message: "No course found" })
@@ -20,6 +20,7 @@ router.get("/course/:id", async(req, res) => {
     }
     res.status(200).json(courses)
 })
+
 
 
 router.post("/course", async(req, res) => {
@@ -59,8 +60,8 @@ router.post("/course", async(req, res) => {
         const upload = multer({
             storage,
             limits: {
-                fieldNameSize: 200,
-                fileSize: 5 * 1024 * 1024,
+                frieldNameSize: 200,
+                fileSize: 80 * 1024 * 1024,
             },
             fileFilter,
         }).single("audio");
@@ -93,7 +94,8 @@ router.post("/course", async(req, res) => {
                         author: req.body.author,
                         description: req.body.description,
                         audiof: audiourl,
-                        images: req.body.images
+                        images: req.body.images,
+                        tag: req.body.tag
                     })
 
 
@@ -128,7 +130,8 @@ router.put("/updatecourse/:id", async(req, res) => {
         author: req.body.author,
         description: req.body.description,
         audiof: req.body.audiof,
-        image: req.body.image
+        image: req.body.image,
+        tag: req.body.tag
     }, {
         new: true
     })
@@ -143,8 +146,7 @@ router.put("/updatecourse/:id", async(req, res) => {
 })
 
 
-
-router.get('/searchmusic', (req, res, next) => {
+router.get('/searchcourse', (req, res, next) => {
     const thename = req.query.thename;
     Course.find({
         $or: [{
@@ -160,6 +162,7 @@ router.get('/searchmusic', (req, res, next) => {
         })
     });
 })
+
 
 router.get('/getmusicbytags/:id', async(req, res) => {
     const courses = await Course.find({ tag: req.params.id })
