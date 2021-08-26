@@ -67,8 +67,7 @@ router.get('/crosscheck23', async(req, res) => {
 router.get('/crosscheck', async(req, res) => {
 
     var smtpTransport = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        service: "Gmail",
+        host: process.env.Hostname,
         port: "587",
         secure: false,
         auth: {
@@ -77,7 +76,8 @@ router.get('/crosscheck', async(req, res) => {
         }
     });
     var mailOptions = {
-        to: 'mukhtarapril2000@gmail.com',
+       from: "'HelloAmazing' <mukhtarapril2000@gmail.com>",
+        to: 'mukhtarapril8@gmail.com',
         subject: 'account verification',
         html: 'hello world confirmation mail',
     }
@@ -89,27 +89,6 @@ router.get('/crosscheck', async(req, res) => {
         }
     });
 })
-
-// router.get('/crosscheck', async(req, res) => {
-//   const smtpTransport = nodemailer.createTransort({
-//     host: 'smtp-relay.sendinblue.com',
-//     post: 587,
-//     auth: {
-//         user: "mukhtarapril2000@gmail.com",
-//         pass: "UBYDRcQv19W0C5t2",
-//     }
-//   })
-
-//   const sendResult = await smtpTransport.sendMail({
-//     from: 'mukhtarapril2000@gmail.com',
-//     to: 'mukhtarapril8@gmail.com',
-//     subject: 'account verification',
-//     html: 'hello world confirmation mail',
-//   })
-
-// console.log(sendResult)        
-//     })
-
 
 
 //register user
