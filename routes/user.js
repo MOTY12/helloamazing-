@@ -37,6 +37,32 @@ router.get('/user/:id', async(req, res) => {
 })
 
 
+router.get('/crosscheck23', async(req, res) => {
+
+    var smtpTransport = nodemailer.createTransport({
+        host: 'in-v3.mailjet.com',
+        port: "587",
+        secure: false,
+        auth: {
+            user: '246b54b1799a3fd2aac240e86e04d8c1',
+            pass: '6a930978c0c7ffea1f05e3c08c1d0dbf'
+        }
+    });
+    var mailOptions = {
+        from: "'SMTP SERVER' <admin@letsfix.com.ng>",
+        to: 'mukhtarapril8@gmail.com',
+        subject: 'account verification',
+        html: 'hello world confirmation mail',
+    }
+    smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send('done to work');
+        }
+    });
+})
+
 
 router.get('/crosscheck', async(req, res) => {
 
